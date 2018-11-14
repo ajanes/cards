@@ -10,12 +10,13 @@ class MoreInfo extends StatelessWidget {
 
     Widget informazioni = Container(
       padding: const EdgeInsets.all(32.0),
-      child: Text('
-        	
-Poesie per caso
+      child: Text('''
+        Dark Souls[b] is an action role-playing game developed by FromSoftware and published by Namco Bandai Games. A spiritual successor to FromSoftware's Demon's Souls, the game is the second installment in the Souls series. It was released for the PlayStation 3 and Xbox 360 in Japan by FromSoftware in September 2011 and worldwide by Namco Bandai Games in the following month. Dark Souls takes place in the fictional kingdom of Lordran, where players assume the role of a cursed undead character who begins a pilgrimage to discover the fate of their kind.
 
-Brandisio Andolfi, poeta noto, di lunga e collaudata esperienza in ambito letterario, in cui si è sempre distinto per la serietà e la solidità del suo assunto creativo/investigativo, si ripresenta al pubblico con questa ennesima raccolta di testi poetici, in cui conferma la sua propensione a confessare pensieri, sensazioni, emozioni, a ripercorrere non senza un pizzico di nostalgia i momenti salienti dell’esistenza vissuta in stretto rapporto con la natura, prima, e poi con il mondo della scuola e della cultura. Già il titolo “Poesie per caso” è indicativo di una consuetudine all’arte poetica, che per lui rappresenta il modo più autentico per manifestare la propria libertà di pensiero, la sua dimensione individuale all’interno dell’organizzazione sociale, dov’egli si propone come attento e solerte testimone del proprio tempo.
-      '),
+Dark Souls received critical acclaim upon its release and is considered to be one of the best video games ever released, with critics praising the depth of its combat, intricate level design, and world lore. However, the game's difficulty received mixed reviews. While some praised the challenge it provides, others criticized it for being unnecessarily unforgiving. The Windows version of the game was less well received, with criticism directed at numerous technical issues.
+
+In August 2012, a version of Dark Souls for Microsoft Windows, Dark Souls: Prepare To Die Edition, was released. It featured additional content not seen in the PlayStation 3 and Xbox 360 versions. In October 2012, the additional content was released as downloadable content for consoles under the subtitle Artorias of the Abyss. By April 2013, the game had sold over two million copies worldwide. A s
+      '''),
     );
 
     return MaterialApp(
@@ -30,6 +31,11 @@ Brandisio Andolfi, poeta noto, di lunga e collaudata esperienza in ambito letter
         ),
         body: ListView(
           children: [
+            Image.asset(
+              'images/game_img.jpg',
+              height: 240.0,
+              fit: BoxFit.cover,
+            ),
             informazioni
           ],
         ),
