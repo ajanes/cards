@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 
-class MoreInfo extends StatelessWidget {
+class MoreInfo extends StatefulWidget{
+  final String titolo;
+                                                //////////////
+  MoreInfo({Key key, this.titolo}) : super (key: key);    /////////
+  @override                                               /////////   NON HO IDEA DI COME FUNZIONI MA FUNZIONA 
+  _MoreInfo createState() => new _MoreInfo();             /////////
+                                                //////////////
+}
+
+class _MoreInfo extends State<MoreInfo> {
 
   final barColor = const Color(0xFF26ae60);
   final bgColor = const Color(0xFFDAE0E2);
@@ -26,7 +35,7 @@ In August 2012, a version of Dark Souls for Microsoft Windows, Dark Souls: Prepa
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('TITOLO'),
+          title: new Text("${widget.titolo}"),
           backgroundColor: barColor,
         ),
         body: ListView(

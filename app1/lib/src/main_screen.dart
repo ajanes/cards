@@ -3,6 +3,7 @@ import 'package:english_words/english_words.dart';
 import 'more_info.dart';
 
 class RandomWordsState extends State<RandomWords> {
+  String _titolo;
 
   final List<WordPair> _suggestions = <WordPair>[];
   final Set<WordPair> _saved = new Set<WordPair>();
@@ -64,7 +65,7 @@ class RandomWordsState extends State<RandomWords> {
 
   void _pushSaved(){
     Navigator.of(context).push(
-      new MaterialPageRoute<void>(   // Add 20 lines from here...
+      new MaterialPageRoute<void>( 
         builder: (BuildContext context) {
           final Iterable<ListTile> tiles = _saved.map(
             (WordPair pair) {
@@ -74,9 +75,10 @@ class RandomWordsState extends State<RandomWords> {
                   style: _biggerFont,
                 ),
                 onTap:(){
-                 Navigator.push(
+                  _titolo=pair.asPascalCase;
+                  Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => MoreInfo()),
+                    MaterialPageRoute(builder: (context) => MoreInfo(titolo: _titolo)),
                   );
                 }
               );
