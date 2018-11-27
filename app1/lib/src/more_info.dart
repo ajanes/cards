@@ -11,6 +11,10 @@ class MoreInfo extends StatefulWidget{
 
 class _MoreInfo extends State<MoreInfo> {
 
+  void schermataPrecedente() {
+    Navigator.pop(context);
+  }
+
   final barColor = const Color(0xFF26ae60);
   final bgColor = const Color(0xFFDAE0E2);
 
@@ -29,14 +33,9 @@ In August 2012, a version of Dark Souls for Microsoft Windows, Dark Souls: Prepa
     );
 
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       home: Scaffold(
         appBar: AppBar(
           title: new Text("${widget.titolo}"),
-          backgroundColor: barColor,
         ),
         body: ListView(
           children: [
@@ -47,6 +46,11 @@ In August 2012, a version of Dark Souls for Microsoft Windows, Dark Souls: Prepa
             ),
             informazioni
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: schermataPrecedente,
+          //MaterialPageRoute(builder: (context) => RandomWords()),
+          child: Icon(Icons.arrow_back),
         ),
       ),
     );
