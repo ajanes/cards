@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class Screen3 extends StatefulWidget {
   @override
@@ -6,6 +9,8 @@ class Screen3 extends StatefulWidget {
 }
 
 class _Screen3 extends State<Screen3> {
+  String answer2;
+  String question2;
   bool _visible = true;
   bool _invisible = true;
 
@@ -20,11 +25,11 @@ class _Screen3 extends State<Screen3> {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(top: 60.0),
-            ),   
+            ),
             cards(), // <==  Domanda e risposta con opacita
             Padding(
               padding: EdgeInsets.only(top: 30.0),
-            ), 
+            ),
             buttons(), // <==  Pulsanti X e OK
           ],
         ),
@@ -48,7 +53,8 @@ class _Screen3 extends State<Screen3> {
           ),
           child: Center(
             child: Text(
-              " I am a question. ",
+              question(),
+              textAlign: TextAlign.center,
               textScaleFactor: 2,
               style: TextStyle(color: Colors.white),
             ),
@@ -62,6 +68,7 @@ class _Screen3 extends State<Screen3> {
       ),
     );
   }
+
   Widget cardAnswer() {
     return AnimatedOpacity(
       opacity: _invisible ? 0.0 : 1.0,
@@ -76,7 +83,8 @@ class _Screen3 extends State<Screen3> {
           ),
           child: Center(
             child: Text(
-              " I am the answer. ",
+              answer(),
+              textAlign: TextAlign.center,
               textScaleFactor: 2,
               style: TextStyle(color: Colors.white),
             ),
@@ -92,8 +100,27 @@ class _Screen3 extends State<Screen3> {
   }
 
   ////   FUNCTIONS   ////
-  
-  Widget cards(){  ///  <== Ritorna le " cards " con le varie domande e risposte
+
+  String answer() {
+    fetchPost().then((post) {
+      setState(() {
+        answer2 = post.answer;
+      });return answer2;
+    });
+    return answer2;
+  }
+
+  String question() {
+    fetchPost().then((post) {
+      setState(() {
+        question2 = post.statement;
+      });return question2;
+    });
+    return question2;
+  }
+
+  Widget cards() {
+    ///  <== Ritorna le " cards " con le varie domande e risposte
     return Stack(
       children: <Widget>[
         cardQuestion(),
@@ -102,11 +129,13 @@ class _Screen3 extends State<Screen3> {
     );
   }
 
-  Widget buttons(){  ///   <== I PULSANTI X E  OK
+  Widget buttons() {
+    ///   <== I PULSANTI X E  OK
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        FlatButton( //  <== Non so la risposta
+        FlatButton(
+          //  <== Non so la risposta
           onPressed: () {}, // Per ora, il pulsante non fa nulla
           child: Icon(
             Icons.close,
@@ -116,7 +145,8 @@ class _Screen3 extends State<Screen3> {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 60.0),
         ),
-        FlatButton(  //  <== So la risposta
+        FlatButton(
+          //  <== So la risposta
           onPressed: () {}, // Per ora, il pulsante non fa nulla
           child: Icon(
             Icons.done,
@@ -126,5 +156,33 @@ class _Screen3 extends State<Screen3> {
       ],
     );
   }
+}
 
+Future<Post> fetchPost() async {
+  final response = await http.get(
+      'http://10.7.168.54:4000/api/card/053787f2-d0ae-470d-8a0b-273ea880b682');
+
+  if (response.statusCode == 200) {
+    // If server returns an OK response, parse the JSON
+    return Post.fromJson(json.decode(response.body));
+  } else {
+    // If that response was not OK, throw an error.
+    throw Exception('Failed to load post');
+  }
+}
+
+class Post {
+  var category;
+  final String answer;
+  final String statement;
+
+  Post({this.category, this.answer, this.statement});
+
+  factory Post.fromJson(Map<String, dynamic> json) {
+    return Post(
+      answer: json['answer'],
+      category: json['category'],
+      statement: json['statement'],
+    );
+  }
 }
