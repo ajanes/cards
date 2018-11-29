@@ -11,7 +11,7 @@ class Screen2 extends StatefulWidget{
 }
 
 class _Screen2 extends State<Screen2> {
-  Future<Post> post= fetchPost();
+  //Future<Games> game= fetchPost();
   List<String> lItems = [];
   
   Widget build(BuildContext context) {
@@ -40,8 +40,11 @@ class _Screen2 extends State<Screen2> {
   }
 
   Widget _buildTodoList() {  ///  <==  Crea l'intera lista 
-    _addTodoItem(dati('body'));
-    //prova(); // DA TOGLIERE UNA VOLTA OTTENUTO I DATI DALLA RETE 
+
+    fetchPost().then((game) {
+      print(game.deck[0].id);
+    });
+
     return new ListView.builder(
       itemBuilder: (context, index) {
         if(index < lItems.length) {
@@ -72,64 +75,57 @@ class _Screen2 extends State<Screen2> {
 
   ////   FUNCTIONS   ////
   
-  void _addTodoItem(Text task) {  ///  <== Viene chiamata ogni volta che si preme il pulsante
-    if(task.data.length > 0) {
-      setState(() => lItems.add(task.data));
-    }
-  }
-
-  Text dati(String opz) { // <== Ritorna i dati
-    String ok='1';
-
-    FutureBuilder<Post>(
-      future: post,
-      builder: (context, snapshot) { 
-        ok='2';
-        if (snapshot.hasData) {
-          ok='3';
-          return Text(snapshot.data.body);
-        } else if (snapshot.hasError) {
-          ok='4';
-          return Text("${snapshot.error}");
-        }
-      },
-    );
-    return Text(ok);
-  }
-
+  // void _addTodoItem(String task) {  ///  <== Viene chiamata ogni volta che si preme il pulsante
+  //   debugPrint(task);
+  //   setState(() => lItems.add(task));
+  // }
+ 
 }
-
   ////   NETWORK   ////
-  
-  class Post {
-    final int id;
-    final String title;
-    final String body;
-    final String img;
-    Post({this.id, this.title, this.body, this.img});
+ 
+  class Games {
+    final List<Deck> deck;
 
-    factory Post.fromJson(Map<String, dynamic> json) {
-      return Post(
-        id: json['id'], 
-        title: json['title'],
-        body: json['body'],
-        img: json['img']
+    Games({this.deck,});
+
+    factory Games.fromJson(Map<String, dynamic> json) {
+      var list = json['deck'] as List;
+      print(list.runtimeType);
+      List<Deck> deckList = list.map((i) => Deck.fromJson(i)).toList();
+
+      return Games(
+        deck: deckList,
       );
     }
 
   }
 
-  Future<Post> fetchPost() async {
+  Future<Games> fetchPost() async {
 
     final response =
-        await http.get('https://my-json-server.typicode.com/SultnB/test/posts/6');
+        await http.get('https://my-json-server.typicode.com/SultnB/test2/db');
 
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON
-      return Post.fromJson(json.decode(response.body));
+      return Games.fromJson(json.decode(response.body));
     } else {
       // If that call was not successful, throw an error.
       throw Exception('Failed to load post');
+    }
+
+  }
+
+  class Deck {
+    final int id;
+    final String description;
+
+    Deck({this.id, this.description});
+
+    factory Deck.fromJson(Map<String, dynamic> json) {
+      return Deck(
+        id: json['id'],
+        description: json['description'],
+      );
     }
 
   }
