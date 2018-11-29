@@ -9,8 +9,8 @@ class Screen3 extends StatefulWidget {
 }
 
 class _Screen3 extends State<Screen3> {
-  String answer2;
-  String question2;
+  String answer;
+  String question;
   bool _visible = true;
   bool _invisible = true;
 
@@ -53,7 +53,7 @@ class _Screen3 extends State<Screen3> {
           ),
           child: Center(
             child: Text(
-              question(),
+              question,
               textAlign: TextAlign.center,
               textScaleFactor: 2,
               style: TextStyle(color: Colors.white),
@@ -83,7 +83,7 @@ class _Screen3 extends State<Screen3> {
           ),
           child: Center(
             child: Text(
-              answer(),
+              answer,
               textAlign: TextAlign.center,
               textScaleFactor: 2,
               style: TextStyle(color: Colors.white),
@@ -101,22 +101,13 @@ class _Screen3 extends State<Screen3> {
 
   ////   FUNCTIONS   ////
 
-  String answer() {
-    fetchPost().then((post) {
-      setState(() {
-        answer2 = post.answer;
-      });return answer2;
-    });
-    return answer2;
-  }
+  void initState(){
+    super.initState();
 
-  String question() {
     fetchPost().then((post) {
-      setState(() {
-        question2 = post.statement;
-      });return question2;
-    });
-    return question2;
+      answer=post.answer;
+      question=post.statement;
+    }).whenComplete(() => setState(() {}));
   }
 
   Widget cards() {
