@@ -11,7 +11,7 @@ class Screen2 extends StatefulWidget{
 }
 
 class _Screen2 extends State<Screen2> {
-  //Future<Games> game= fetchPost();
+  Future<Games> game= fetchPost();
   List<String> lItems = [];
   
   Widget build(BuildContext context) {
@@ -40,11 +40,11 @@ class _Screen2 extends State<Screen2> {
   }
 
   Widget _buildTodoList() {  ///  <==  Crea l'intera lista 
-
+    
     fetchPost().then((game) {
-      print(game.deck[0].id);
+      game.deck.forEach((game) => print(game.description));
     });
-
+    
     return new ListView.builder(
       itemBuilder: (context, index) {
         if(index < lItems.length) {
@@ -75,10 +75,9 @@ class _Screen2 extends State<Screen2> {
 
   ////   FUNCTIONS   ////
   
-  // void _addTodoItem(String task) {  ///  <== Viene chiamata ogni volta che si preme il pulsante
-  //   debugPrint(task);
-  //   setState(() => lItems.add(task));
-  // }
+  void _addTodoItem(String task) {  ///  <== Viene chiamata ogni volta che si preme il pulsante
+    setState(() => lItems.add(task));
+  }
  
 }
   ////   NETWORK   ////
