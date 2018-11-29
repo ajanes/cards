@@ -104,9 +104,9 @@ class _Screen3 extends State<Screen3> {
   void initState(){
     super.initState();
 
-    fetchPost().then((post) {
-      answer=post.answer;
-      question=post.statement;
+    fetchPost().then((card) {
+      answer=card.answer;
+      question=card.statement;
     }).whenComplete(() => setState(() {}));
   }
 
@@ -149,28 +149,28 @@ class _Screen3 extends State<Screen3> {
   }
 }
 
-Future<Post> fetchPost() async {
+Future<Card> fetchPost() async {
   final response = await http.get(
       'http://10.7.168.54:4000/api/card/053787f2-d0ae-470d-8a0b-273ea880b682');
 
   if (response.statusCode == 200) {
     // If server returns an OK response, parse the JSON
-    return Post.fromJson(json.decode(response.body));
+    return Card.fromJson(json.decode(response.body));
   } else {
     // If that response was not OK, throw an error.
     throw Exception('Failed to load post');
   }
 }
 
-class Post {
+class Card {
   var category;
   final String answer;
   final String statement;
 
-  Post({this.category, this.answer, this.statement});
+  Card({this.category, this.answer, this.statement});
 
-  factory Post.fromJson(Map<String, dynamic> json) {
-    return Post(
+  factory Card.fromJson(Map<String, dynamic> json) {
+    return Card(
       answer: json['answer'],
       category: json['category'],
       statement: json['statement'],
