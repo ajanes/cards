@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'Screen2.dart';
 
 TextEditingController user =new TextEditingController();
-
+String uuid;
 class Screen1 extends StatefulWidget{
   @override
   _Screen1 createState() => _Screen1();
@@ -40,11 +40,7 @@ class _Screen1 extends State<Screen1> {
   ////   WIDGETS   ////
 
   Widget username = Container(
-      padding: EdgeInsets.only(
-        left: 32,
-        right: 32,
-        top: 200,
-      ),
+      padding: EdgeInsets.only(left: 32,right: 32,top: 200,),
       child: Center(
         child: TextFormField(
           controller: user,
@@ -56,18 +52,18 @@ class _Screen1 extends State<Screen1> {
   ////   FUNCTIONS   ////
 
   void nextScreen(){
-
     fetchPost().then((user) {
-      print("User ID is :"+user.id);
+      print("User UUID is :"+user.id);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Screen2(uuid:user.id)),
+      );
     }).whenComplete(() => setState(() {}));
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Screen2()),
-    );
   }
 
 }
+
+  ////   NETWORK   ////
 
   class UserID {
     final String id;
@@ -78,16 +74,15 @@ class _Screen1 extends State<Screen1> {
         id: json['id'],
       );
     }
-
   }
 
   Future<UserID> fetchPost() async {
-    print("Username is :"+user.text);
     final response =
         await http.get('http://10.7.168.54:4000/api/register?name=${user.text}');
 
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON
+      //print("Username is : "+user.text);
       return UserID.fromJson(json.decode(response.body));
     } else {
       // If that call was not successful, throw an error.

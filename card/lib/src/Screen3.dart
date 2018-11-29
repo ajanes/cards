@@ -110,8 +110,7 @@ class _Screen3 extends State<Screen3> {
     }).whenComplete(() => setState(() {}));
   }
 
-  Widget cards() {
-    ///  <== Ritorna le " cards " con le varie domande e risposte
+  Widget cards() { ///  <== Ritorna le " cards " con le varie domande e risposte
     return Stack(
       children: <Widget>[
         cardQuestion(),
@@ -120,13 +119,11 @@ class _Screen3 extends State<Screen3> {
     );
   }
 
-  Widget buttons() {
-    ///   <== I PULSANTI X E  OK
+  Widget buttons() {  ///   <== I PULSANTI X E  OK
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        FlatButton(
-          //  <== Non so la risposta
+        FlatButton(  //  <== Non so la risposta
           onPressed: () {}, // Per ora, il pulsante non fa nulla
           child: Icon(
             Icons.close,
@@ -136,8 +133,7 @@ class _Screen3 extends State<Screen3> {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 60.0),
         ),
-        FlatButton(
-          //  <== So la risposta
+        FlatButton(  //  <== So la risposta
           onPressed: () {}, // Per ora, il pulsante non fa nulla
           child: Icon(
             Icons.done,
@@ -162,18 +158,21 @@ Future<Card> fetchPost() async {
   }
 }
 
-class Card {
-  var category;
-  final String answer;
-  final String statement;
+  class Card {
+    var category;
+    final String answer;
+    final String statement;
 
-  Card({this.category, this.answer, this.statement});
+    Card({this.category, this.answer, this.statement});
 
-  factory Card.fromJson(Map<String, dynamic> json) {
-    return Card(
-      answer: json['answer'],
-      category: json['category'],
-      statement: json['statement'],
-    );
+    factory Card.fromJson(Map<String, dynamic> json) {
+      return Card(
+        answer: json['answer'],
+        category: json['category'],
+        statement: json['statement'],
+      );
+    }
+
   }
-}
+
+  
