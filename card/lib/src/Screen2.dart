@@ -42,7 +42,7 @@ class _Screen2 extends State<Screen2> {
   Widget _buildTodoList() {  ///  <==  Crea l'intera lista 
     
     fetchPost().then((game) {
-      game.deck.forEach((game) => print(game.description));
+      game.deck.forEach((game) => _addTodoItem(game.description));
     });
     
     return new ListView.builder(
