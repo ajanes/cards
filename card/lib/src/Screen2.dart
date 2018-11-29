@@ -11,7 +11,7 @@ class Screen2 extends StatefulWidget{
 }
 
 class _Screen2 extends State<Screen2> {
-  List<String> lItems = [''];
+  List<String> lItems = [];
   
   Widget build(BuildContext context) {
 
