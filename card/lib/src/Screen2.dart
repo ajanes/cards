@@ -88,7 +88,7 @@ class _Screen2 extends State<Screen2> {
     Games({this.deck,});
 
     factory Games.fromJson(Map<String, dynamic> json) {
-      var list = json['deck'] as List;
+      var list = json['decks'] as List;
       print(list.runtimeType);
       List<Deck> deckList = list.map((i) => Deck.fromJson(i)).toList();
 
@@ -102,7 +102,7 @@ class _Screen2 extends State<Screen2> {
   Future<Games> fetchPost() async {
 
     final response =
-        await http.get('https://my-json-server.typicode.com/SultnB/test2/db');
+        await http.get('http://10.7.168.54:4000/api/decks');
 
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON
@@ -115,7 +115,7 @@ class _Screen2 extends State<Screen2> {
   }
 
   class Deck {
-    final int id;
+    final String id;
     final String description;
 
     Deck({this.id, this.description});
